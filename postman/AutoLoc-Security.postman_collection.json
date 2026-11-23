@@ -1,0 +1,71 @@
+{
+  "info": {
+    "name": "AutoLoc Security Exercise",
+    "description": "Manual HTTP Basic checks for the classroom USER and ADMIN routes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "Public ping - anonymous (200)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/public/ping"
+      }
+    },
+    {
+      "name": "Hello - anonymous (401)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/hello"
+      }
+    },
+    {
+      "name": "Hello - USER (200)",
+      "request": {
+        "method": "GET",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "student", "type": "string" },
+            { "key": "password", "value": "student123", "type": "string" }
+          ]
+        },
+        "url": "{{baseUrl}}/api/hello"
+      }
+    },
+    {
+      "name": "Admin report - USER (403)",
+      "request": {
+        "method": "GET",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "student", "type": "string" },
+            { "key": "password", "value": "student123", "type": "string" }
+          ]
+        },
+        "url": "{{baseUrl}}/api/admin/report"
+      }
+    },
+    {
+      "name": "Admin report - ADMIN (200)",
+      "request": {
+        "method": "GET",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "admin", "type": "string" },
+            { "key": "password", "value": "admin123", "type": "string" }
+          ]
+        },
+        "url": "{{baseUrl}}/api/admin/report"
+      }
+    }
+  ]
+}
